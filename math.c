@@ -11,3 +11,8 @@ void display_home_menu (void)
 	printf("d. Start a new sequence of problems.\n");
 	printf("e. Save and quit.\n");
 }
+
+void get_user_selection (int *user_selection)
+{
+	scanf("%c", user_selection);
+}
