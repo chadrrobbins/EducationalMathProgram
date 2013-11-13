@@ -8,6 +8,7 @@
 #include <time.h>
 
 void display_home_menu (void);
-void get_char_input (int *user_selection);
+void get_char_input (char *char_selection);
+void display_instructions (void);
 
 #endif
