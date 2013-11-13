@@ -59,3 +59,84 @@ void display_difficulty_prompt (void)
 	printf("Please select your difficulty.\n");
 }
 
+int validate_home_menu_selection (char home_menu_selection)
+{
+	int valid_input = 0;
+
+	switch (home_menu_selection)
+	{
+	case 'a':
+		valid_input = 1;
+		break;
+	case 'b':
+		valid_input = 1;
+		break;
+	case 'c':
+		valid_input = 1;
+		break;
+	case 'd':
+		valid_input = 1;
+		break;
+	case 'e':
+		valid_input = 1;
+		break;
+	default:
+		valid_input = 0;
+		break;
+	}			
+
+	return valid_input;
+}
+
+void evaluate_home_menu_selection (char home_menu_selection, char *user_profile[], int *session_difficulty)
+{
+	while (home_menu_selection != 'e')
+	{
+		switch (home_menu_selection)
+		{
+			case 'a':
+				display_instructions();
+				break;
+			case 'b':
+				display_profile_prompt();
+				get_string_input(user_profile);
+				break;
+			case 'c':
+				display_difficulty_prompt();
+				get_int_input(session_difficulty);
+				break;
+			case 'd':
+				break;
+		}
+	}
+
+	if (home_menu_selection == 'e')
+	{
+		exit(0);
+	}
+}
+
+void run_game_loop (char home_menu_selection, char *user_profile[], int session_difficulty)
+{
+	int valid = 0;
+
+	valid = validate_home_menu_selection(home_menu_selection);
+
+	while (valid != 0)
+	{
+		display_home_menu();
+		get_char_input(&home_menu_selection);
+		//printf("User selection: %c\n", home_menu_selection);
+
+		display_instructions();
+
+		display_profile_prompt();
+		get_string_input(user_profile);
+		//printf("Your user profile is: %s\n", user_profile);
+
+		display_difficulty_prompt();
+		get_int_input(&session_difficulty);
+		//printf("Your session difficulty is: %d\n", session_difficulty);
+	}
+}
+

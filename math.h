@@ -18,5 +18,8 @@ void get_int_input (int *in_integer);
 void display_instructions (void);
 void display_profile_prompt (void);
 void display_difficulty_prompt (void);
+int validate_home_menu_selection (char home_menu_selection);
+void evaluate_home_menu_selection (char home_menu_selection, char *user_profile, int *session_difficulty);
+void run_game_loop (char home_menu_selection, char *user_profile[], int session_difficulty);
 
 #endif
