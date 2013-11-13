@@ -6,7 +6,7 @@ int main (void)
 
 
 	display_home_menu();
-	get_user_selection(&user_selection);
+	get_char_input(&user_selection);
 	printf("User selection: %c\n", user_selection);
 
 	return 0;
