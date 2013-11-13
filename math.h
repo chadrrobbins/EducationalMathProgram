@@ -7,4 +7,6 @@
 #include <string.h>
 #include <time.h>
 
+void display_home_menu (void);
+
 #endif

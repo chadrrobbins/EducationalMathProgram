@@ -3,6 +3,7 @@
 int main (void)
 {
 
+	display_home_menu();
 
 	return 0;
 }
