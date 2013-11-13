@@ -12,9 +12,19 @@ void display_home_menu (void)
 	printf("e. Save and quit.\n");
 }
 
-void get_char_input (char *char_selection)
+void get_char_input (char *in_char)
 {
-	scanf("%c", char_selection);
+	scanf("%c", in_char);
+}
+
+void get_string_input (char *in_string[])
+{
+	scanf("%s", in_string);
+}
+
+void get_int_input (int *in_integer)
+{
+	scanf("%d", in_integer);
 }
 
 void display_instructions (void)
@@ -44,7 +54,8 @@ void display_profile_prompt (void)
 	printf("Please enter your user profile:\n");
 }
 
-void get_string_input (char *in_string[])
+void display_difficulty_prompt (void)
 {
-	scanf("%s", in_string);
+	printf("Please select your difficulty.\n");
 }
+
