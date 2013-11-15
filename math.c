@@ -140,3 +140,55 @@ void run_game_loop (char home_menu_selection, char *user_profile[], int session_
 	}
 }
 
+Struct_Problem generate_math_problem (int level)
+{
+	Struct_Problem problem = {{0}};
+	int i = 0;	
+
+	switch (level)
+	{
+		case 1:
+			for (i = 0; i <= 3; i++)
+			{
+				problem.numbers[i] = rand() % 10; 
+			}
+			problem.operators[0] = '+';
+			problem.operators[1] = '-';
+			break;
+		case 2:
+			for (i = 0; i <= 2; i++)
+			{
+				problem.numbers[i] = rand() % 10; 
+			}
+			problem.operators[0] = 'x';
+			break;
+		case 3:
+			for (i = 0; i <= 2; i++)
+			{
+				problem.numbers[i] = rand() % 10; 
+			}
+			problem.operators[0] = '/';
+			break;
+		case 4:
+			for (i = 0; i <= 3; i++)
+			{
+				problem.numbers[i] = rand() % 10; 
+			}
+			problem.operators[0] = '+';
+			problem.operators[1] = '-';
+			problem.operators[2] = 'x';
+			problem.operators[3] = '/';
+			break;
+		case 5:
+			for (i = 0; i <= 4; i++)
+			{
+				problem.numbers[i] = rand() % 101; 
+			}
+			problem.operators[0] = '+';
+			problem.operators[1] = '-';
+			problem.operators[2] = 'x';
+			problem.operators[3] = '/';
+			break;
+	}
+}
+

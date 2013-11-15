@@ -6,6 +6,8 @@ int main (void)
 	char home_menu_selection = '\0';
 	char *user_profile[MAX] = {'\0'};
 
+	srand((unsigned int) time (NULL));
+
 	display_home_menu();
 	get_char_input(&home_menu_selection);
 	printf("User selection: %c\n", home_menu_selection);
