@@ -154,6 +154,8 @@ Struct_Problem generate_math_problem (int level)
 			}
 			problem.operators[0] = '+';
 			problem.operators[1] = '-';
+			problem.number_sign = '+';
+			problem.problem = problem.numbers[0], problem.operators[rand() % 2], problem.numbers[1], problem.operators[rand() % 2], problem.numbers[2];
 			break;
 		case 2:
 			for (i = 0; i <= 2; i++)

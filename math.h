@@ -15,6 +15,8 @@ typedef struct struct_problem
 {
 	int numbers[4];
 	char operators[4];
+	char number_sign;
+	char problem[20];
 	int solution;
 	int remainder;
 }Struct_Problem;
