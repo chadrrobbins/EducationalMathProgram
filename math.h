@@ -11,16 +11,15 @@
 #define MED 50
 #define MIN 25
 
-typedef struct struct_problem
+typedef struct s_problem
 {
 	int terms;
 	int numbers[4];
 	char operators[4];
-	char number_sign;
-	char problem[20];
+	char number_sign;	
 	int solution;
 	int remainder;
-}Struct_Problem;
+}S_Problem;
 
 void display_home_menu (void);
 void get_char_input (char *in_char);
@@ -33,7 +32,7 @@ void display_difficulty_prompt (void);
 int validate_home_menu_selection (char home_menu_selection);
 void evaluate_home_menu_selection (char home_menu_selection, char *user_profile, int *session_difficulty);
 void run_game_loop (char home_menu_selection, char *user_profile[], int session_difficulty);
-char generate_equation (int max_terms, int max_digits, char available_operators[], char has_negatives, char equation[]);
-Struct_Problem generate_math_problem (int level);
+void generate_equation (int max_terms, int max_digits, char available_operators[], char has_negatives, S_Problem *problem);
+void get_problems (int level, int max_terms, int max_digits, char available_operators[], char has_negatives, S_Problem *problem);
 
 #endif

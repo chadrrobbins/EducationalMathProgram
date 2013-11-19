@@ -5,16 +5,17 @@ int main (void)
 	int session_difficulty = 0;
 	char home_menu_selection = '\0';
 	char *user_profile[MAX] = {'\0'};
-	char equation[] = {'\0'};
+	char equation[20] = {'\0'};
 	char operators[] = {'+', '-', 'x', '/'};
+	S_Problem problem = {{0}};
 
 	int random_number = 0;
 
 	srand((unsigned int) time (NULL));	
 
-	generate_equation(3, 100, operators, 'y', equation);
+	generate_equation(3, 100, operators, 'y', &problem);
 
-	printf("%s\n", equation);
+	//printf("%s\n", equation);
 
 	//display_home_menu();
 	//get_char_input(&home_menu_selection);

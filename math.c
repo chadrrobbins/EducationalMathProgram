@@ -149,16 +149,17 @@ void run_game_loop (char home_menu_selection, char *user_profile[], int session_
 	}
 }
 
-void generate_equation (int max_terms, int number_size, char available_operators[], char has_negatives, char equation[])
+void generate_equation (int max_terms, int number_size, char available_operators[], char has_negatives, S_Problem *problem)
 {
+	int nums = 0;
+	int ops = 0;
 	int i = 0;
-	int j = 0;
-	int k = 0;
 	int number_of_terms = 0;
-	int numbers[] = {0};
-	char operators[] = {'\0'};
+	int numbers[4] = {0};
+	char operators[4] = {'\0'};
 	int number_of_operators = 0;
 	int negative = 0;
+	int terms = 0;
 
 	number_of_terms = rand() % max_terms;
 	number_of_operators = 4;
@@ -168,90 +169,72 @@ void generate_equation (int max_terms, int number_size, char available_operators
 		number_of_terms = rand() % max_terms + 1;
 	}
 
-	for (i = 0; i < number_of_terms; i++)
-	{
-		numbers[i] = rand() % number_size + 1;
-		printf("numbers[%d]: %d\n", i, numbers[i]);
-	}
-
-	for (j = 0; j < number_of_terms - 1; j++)
-	{
-		operators[j] = available_operators[rand() % number_of_operators];
-		printf("operators[%d]: %c\n", j, operators[j]);
-	}
-
-	/*while (i != 0 && j != 0)
-	{
-		equation[i] = numbers[i];
-		equation[j] = operators[j];
-		i--;
-		j--;		
-	}*/
-
-	/*for (k = 0; k <= max_terms; k += 2)
+	for (nums = 0; nums < number_of_terms; nums++)
 	{
 		negative = rand() %2;
+
 		if (negative == 1)
 		{
-			equation[i] = equation[i*-1];
+			problem ->numbers[nums] = (rand() % number_size + 1) * -1;
 		}
-	}*/
+		else
+		{
+			problem ->numbers[nums] = rand() % number_size + 1;
+		}
+		printf("numbers[%d]: %d\n", nums, problem ->numbers[nums]);
+	}
 
+	for (ops = 0; ops < number_of_terms - 1; ops++)
+	{
+		problem ->operators[ops] = available_operators[rand() % number_of_operators];
+		printf("operators[%d]: %c\n", ops, problem ->operators[ops]);
+	}
 
+	terms = nums + ops;
+
+	for (i = 0; i < terms; i++)
+	{
+		if (i % 2 == 0)
+		{
+			printf("%d", problem ->numbers[i/2]);
+			printf(" ");
+		}
+		else
+		{
+			printf("%c", problem ->operators[i/2]);
+			printf(" ");
+		}		
+	}	
+	printf("=");
+	putchar('\n');
 }
 
-Struct_Problem generate_math_problem (int level)
+void get_problems (int level, int max_terms, int max_digits, char has_negatives, S_Problem *problem)
 {
-	Struct_Problem problem = {{0}};
-	int i = 0;	
+	char available_operators[4];
 
 	switch (level)
 	{
-	case 1:
-		problem.terms = rand() % 3;
-		for (i = 0; i <= problem.terms; i++)
-		{
-			problem.numbers[i] = rand() % 10; 
-		}
-		problem.operators[0] = '+';
-		problem.operators[1] = '-';
-		problem.number_sign = '+';
-		//			problem.problem = problem.numbers[0], problem.operators[rand() % 2], problem.numbers[1], problem.operators[rand() % 2], problem.numbers[2];
-		break;
-	case 2:
-		for (i = 0; i <= 2; i++)
-		{
-			problem.numbers[i] = rand() % 10; 
-		}
-		problem.operators[0] = 'x';
-		break;
-	case 3:
-		for (i = 0; i <= 2; i++)
-		{
-			problem.numbers[i] = rand() % 10; 
-		}
-		problem.operators[0] = '/';
-		break;
-	case 4:
-		for (i = 0; i <= 3; i++)
-		{
-			problem.numbers[i] = rand() % 10; 
-		}
-		problem.operators[0] = '+';
-		problem.operators[1] = '-';
-		problem.operators[2] = 'x';
-		problem.operators[3] = '/';
-		break;
-	case 5:
-		for (i = 0; i <= 4; i++)
-		{
-			problem.numbers[i] = rand() % 101; 
-		}
-		problem.operators[0] = '+';
-		problem.operators[1] = '-';
-		problem.operators[2] = 'x';
-		problem.operators[3] = '/';
-		break;
+		case 1:
+			strcpy(available_operators, "+-");
+			generate_equation(3, 9, available_operators, 'n', problem);
+			break;
+		case 2:
+			strcpy(available_operators, "x");
+			generate_equation(2, 9, available_operators, 'n', problem);
+			break;
+		case 3:
+			strcpy(available_operators, "/");
+			generate_equation(2, 9, available_operators, 'n', problem);
+			break;
+		case 4:
+			strcpy(available_operators, "+-x/");
+			generate_equation(3, 9, available_operators, 'y', problem);
+			break;
+		case 5:
+			strcpy(available_operators, "+-x/");
+			generate_equation(4, 100, available_operators, 'y', problem);
+			break;
 	}
 }
 
