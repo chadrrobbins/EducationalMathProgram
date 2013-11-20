@@ -120,7 +120,7 @@ void evaluate_home_menu_selection (char home_menu_selection, char user_profile[5
 		get_int_input(session_difficulty);
 		break;
 	case 'd':
-		if (user_profile == "")
+		if (strcmp(user_profile, "") == 0)
 		{
 			printf("Please enter a user profile first.\n");
 			system("pause");
@@ -135,6 +135,7 @@ void evaluate_home_menu_selection (char home_menu_selection, char user_profile[5
 		while (problem_count < 10)
 		{			
 			get_problems(*session_difficulty, problem);
+			problem_count++;
 		}
 		break;
 	case 'e':
@@ -175,7 +176,8 @@ void generate_equation (int max_terms, int number_size, char available_operators
 	int terms = 0;
 
 	number_of_terms = rand() % max_terms;
-	number_of_operators = 4;
+	number_of_operators = strlen(available_operators);
+	//printf("Number of operators: %d", number_of_operators);
 
 	while (number_of_terms < 2)
 	{
@@ -219,12 +221,11 @@ void generate_equation (int max_terms, int number_size, char available_operators
 		}		
 	}	
 	printf("=");
-	putchar('\n');
 }
 
 void get_problems (int level, S_Problem *problem)
 {
-	char available_operators[4];
+	char available_operators[5];
 
 	switch (level)
 	{
@@ -233,7 +234,7 @@ void get_problems (int level, S_Problem *problem)
 		generate_equation(3, 9, available_operators, 'n', problem);
 		break;
 	case 2:
-		strcpy(available_operators, "x");
+		strcpy(available_operators, "*");
 		generate_equation(2, 9, available_operators, 'n', problem);
 		break;
 	case 3:
@@ -241,13 +242,18 @@ void get_problems (int level, S_Problem *problem)
 		generate_equation(2, 9, available_operators, 'n', problem);
 		break;
 	case 4:
-		strcpy(available_operators, "+-x/");
+		strcpy(available_operators, "+-*/");
 		generate_equation(3, 9, available_operators, 'y', problem);
 		break;
 	case 5:
-		strcpy(available_operators, "+-x/");
+		strcpy(available_operators, "+-*/");
 		generate_equation(4, 100, available_operators, 'y', problem);
 		break;
 	}
+}
+
+void solve_problem (S_Problem *problem)
+{
+	
 }
 

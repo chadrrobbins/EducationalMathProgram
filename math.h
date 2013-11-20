@@ -39,5 +39,6 @@ void evaluate_home_menu_selection (char home_menu_selection, char user_profile[5
 void run_game_loop (void);
 void generate_equation (int max_terms, int max_digits, char available_operators[], char has_negatives, S_Problem *problem);
 void get_problems (int level, S_Problem *problem);
+void solve_problem (S_Problem *problem);
 
 #endif
