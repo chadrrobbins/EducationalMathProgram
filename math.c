@@ -12,12 +12,14 @@ void display_home_menu (void)
 	printf("e. Save and quit.\n");
 }
 
-void get_char_input (char *in_char)
+char get_char_input (void)
 {
-	scanf("%c", in_char);
+	char my_char = '\0';
+	scanf("%c", &my_char);
+	return my_char;
 }
 
-void get_string_input (char *in_string[])
+void get_string_input (char in_string[])
 {
 	scanf("%s", in_string);
 }
@@ -38,6 +40,7 @@ int get_number (int size_of_numbers)
 
 void display_instructions (void)
 {
+	system("cls");
 	printf("Zippy's Educational Math Program is designed for elementary school children.\n");
 	printf("There are five levels of difficulty:\n\n");
 	printf("Level 1 - Easy: Includes addition and subtraction problems, with positive\n");
@@ -89,63 +92,73 @@ int validate_home_menu_selection (char home_menu_selection)
 	case 'e':
 		valid_input = 1;
 		break;
-	default:
+		/*default:
+		printf("Please enter a valid menu selection.\n");
 		valid_input = 0;
-		break;
-	}			
+		break;*/
+	}	
 
 	return valid_input;
 }
 
-void evaluate_home_menu_selection (char home_menu_selection, char *user_profile[], int *session_difficulty)
+void evaluate_home_menu_selection (char home_menu_selection, char user_profile[50], int *session_difficulty, S_Problem *problem)
 {
-	while (home_menu_selection != 'e')
+	int problem_count = 0;
+
+	switch (home_menu_selection)
 	{
-		switch (home_menu_selection)
-		{
-		case 'a':
-			display_instructions();
-			break;
-		case 'b':
-			display_profile_prompt();
-			get_string_input(user_profile);
-			break;
-		case 'c':
-			display_difficulty_prompt();
-			get_int_input(session_difficulty);
-			break;
-		case 'd':
-			break;
-		}
-	}
-
-	if (home_menu_selection == 'e')
-	{
-		exit(0);
-	}
-}
-
-void run_game_loop (char home_menu_selection, char *user_profile[], int session_difficulty)
-{
-	int valid = 0;
-
-	valid = validate_home_menu_selection(home_menu_selection);
-
-	while (valid != 0)
-	{
-		display_home_menu();
-		get_char_input(&home_menu_selection);
-		//printf("User selection: %c\n", home_menu_selection);
-
+	case 'a':
 		display_instructions();
-
+		system("pause");
+		break;
+	case 'b':
 		display_profile_prompt();
 		get_string_input(user_profile);
-		//printf("Your user profile is: %s\n", user_profile);
-
+		break;
+	case 'c':
 		display_difficulty_prompt();
-		get_int_input(&session_difficulty);
-		//printf("Your session difficulty is: %d\n", session_difficulty);
+		get_int_input(session_difficulty);
+		break;
+	case 'd':
+		if (user_profile == "")
+		{
+			printf("Please enter a user profile first.\n");
+			system("pause");
+			break;
+		}
+		if (*session_difficulty == 0)
+		{
+			printf("Please enter a difficulty for this session.\n");
+			system("pause");
+			break;
+		}
+		while (problem_count < 10)
+		{			
+			get_problems(*session_difficulty, problem);
+		}
+		break;
+	case 'e':
+		exit(0);
+		break;
+	}	
+}
+
+void run_game_loop (void)
+{
+	int valid = 0;
+	int problem_count = 0;
+	int session_difficulty = 0;
+	char home_menu_selection = '\0';
+	char user_profile[50] = {'\0'};
+	S_Problem problem = {{0}};	
+
+	while (home_menu_selection != 'e')
+	{
+		system("cls");
+		display_home_menu();
+		home_menu_selection = get_char_input();
+		valid = validate_home_menu_selection(home_menu_selection);
+		evaluate_home_menu_selection(home_menu_selection, user_profile, &session_difficulty, &problem);		
 	}
 }
 
@@ -209,32 +222,32 @@ void generate_equation (int max_terms, int number_size, char available_operators
 	putchar('\n');
 }
 
-void get_problems (int level, int max_terms, int max_digits, char has_negatives, S_Problem *problem)
+void get_problems (int level, S_Problem *problem)
 {
 	char available_operators[4];
 
 	switch (level)
 	{
-		case 1:
-			strcpy(available_operators, "+-");
-			generate_equation(3, 9, available_operators, 'n', problem);
-			break;
-		case 2:
-			strcpy(available_operators, "x");
-			generate_equation(2, 9, available_operators, 'n', problem);
-			break;
-		case 3:
-			strcpy(available_operators, "/");
-			generate_equation(2, 9, available_operators, 'n', problem);
-			break;
-		case 4:
-			strcpy(available_operators, "+-x/");
-			generate_equation(3, 9, available_operators, 'y', problem);
-			break;
-		case 5:
-			strcpy(available_operators, "+-x/");
-			generate_equation(4, 100, available_operators, 'y', problem);
-			break;
+	case 1:
+		strcpy(available_operators, "+-");
+		generate_equation(3, 9, available_operators, 'n', problem);
+		break;
+	case 2:
+		strcpy(available_operators, "x");
+		generate_equation(2, 9, available_operators, 'n', problem);
+		break;
+	case 3:
+		strcpy(available_operators, "/");
+		generate_equation(2, 9, available_operators, 'n', problem);
+		break;
+	case 4:
+		strcpy(available_operators, "+-x/");
+		generate_equation(3, 9, available_operators, 'y', problem);
+		break;
+	case 5:
+		strcpy(available_operators, "+-x/");
+		generate_equation(4, 100, available_operators, 'y', problem);
+		break;
 	}
 }
 
